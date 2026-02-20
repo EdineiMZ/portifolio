@@ -1,10 +1,10 @@
 const loadingLogs = [
-    '[boot] Iniciando apresentação do portfólio...',
-    '[scan] Verificando projetos e experiências...',
-    '[secure] Aplicando boas práticas de segurança visual...',
-    '[perf] Otimizando renderização para dispositivos móveis...',
-    '[ui] Carregando animações e componentes responsivos...',
-    '[done] Portfólio pronto para navegação.'
+    '[boot] Inicializando apresentação premium...',
+    '[scan] Mapeando stack principal: Python, JS, React, Node...',
+    '[secure] Aplicando defaults seguros para navegação...',
+    '[perf] Otimizando renderização e transições...',
+    '[ui] Ativando animações responsivas...',
+    '[done] Bem-vindo ao portfólio de Edinei Miguel Zanol.'
 ];
 
 function toggleTheme() {
@@ -33,7 +33,7 @@ function runTerminalIntro() {
             terminalBody.innerHTML += `<div>> ${loadingLogs[index]}</div>`;
             terminalBody.scrollTop = terminalBody.scrollHeight;
             index += 1;
-            setTimeout(writeLog, 420);
+            setTimeout(writeLog, 450);
             return;
         }
 
@@ -45,6 +45,7 @@ function runTerminalIntro() {
 
 function initRevealOnScroll() {
     const revealItems = document.querySelectorAll('.reveal-on-scroll');
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -52,7 +53,7 @@ function initRevealOnScroll() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.14 });
 
     revealItems.forEach((item) => observer.observe(item));
 }
