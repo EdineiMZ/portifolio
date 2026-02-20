@@ -3,220 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Portfólio</title>
+    <title>Portfólio | Edinei Miguel Zanol</title>
+    <meta name="description" content="Portfólio profissional de Edinei Miguel Zanol, desenvolvedor full stack com foco em aplicações web modernas.">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-<!-- Menu de navegação -->
-<nav>
-    <a href="#sobre-mim">Sobre Mim</a>
-    <a href="#competencias">Competências</a>
-    <a href="#projetos-profissionais">Projetos Profissionais</a>
-    <a href="#projetos-pessoais">Projetos Pessoais</a>
-    <a href="#eventos">Eventos</a>
-    <button class="theme-toggle-btn" id="theme-icon" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-</nav>
-
-<!-- Cabeçalho -->
-<header class="header">
-    <h1>Bem-vindo ao meu Portfólio</h1>
-    <p>Desenvolvedor Full Stack | Edinei Miguel Zanol</p>
-    <div class="social-icons">
-        <a href="https://br.linkedin.com/in/edinei-zanol-0718b3266"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/EdineiMZ"><i class="fab fa-github"></i></a>
-        <a href="https://www.instagram.com/edinei_zanol/profilecard/?igsh=cWE4a21wNWkyeDNv"><i class="fab fa-instagram"></i></a>
-    </div>
-</header>
-
-<!-- Sobre Mim -->
-<section class="container" id="sobre-mim">
-    <h2>Sobre Mim</h2>
-    <div class="about-me">
-        <img src="imgs/profile.jpg" alt="Edinei Zanol" class="profile-img">
-        <div class="about-me-text">
-            <p>Olá! Sou Edinei Miguel Zanol, desenvolvedor Full Stack apaixonado por tecnologia e design. Ao longo da minha carreira, trabalhei em diversos projetos que me ajudaram a desenvolver habilidades em várias linguagens de programação e tecnologias. Meu objetivo é criar soluções inovadoras e eficientes para resolver problemas reais.</p>
+    <div class="terminal-intro" id="terminal-intro" aria-live="polite">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span></span><span></span><span></span>
+                <p>edinei@portfolio:~</p>
+            </div>
+            <div class="terminal-body" id="terminal-body"></div>
         </div>
     </div>
-</section>
 
-<!-- Competências -->
-<section class="container" id="competencias">
-    <h2>Competências</h2>
-    <div class="skills">
-        <div class="skill-icons">
-            <div>
-                <i class="fab fa-html5" title="HTML5"></i>
-                <p>HTML5</p>
-            </div>
-            <div>
-                <i class="fab fa-css3-alt" title="CSS3"></i>
-                <p>CSS3</p>
-            </div>
-            <div>
-                <i class="fab fa-js" title="JavaScript"></i>
-                <p>JavaScript</p>
-            </div>
-            <div>
-                <i class="fab fa-python" title="Python"></i>
-                <p>Python</p>
-            </div>
-            <div>
-                <i class="fab fa-react" title="React"></i>
-                <p>React</p>
-            </div>
-            <div>
-                <i class="fab fa-node-js" title="Node.js"></i>
-                <p>Node.js</p>
-            </div>
-            <div>
-                <i class="fab fa-java" title="Java"></i>
-                <p>Java</p>
-            </div>
-        </div>
-    </div>
-</section>
+    <nav class="top-nav" id="top-nav">
+        <a href="#sobre-mim">Sobre</a>
+        <a href="#competencias">Tecnologias</a>
+        <a href="#projetos-profissionais">Profissionais</a>
+        <a href="#projetos-pessoais">Pessoais</a>
+        <a href="#eventos">Eventos</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Alternar tema">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+    </nav>
 
-<!-- Projetos Profissionais -->
-<section class="container" id="projetos-profissionais">
-    <h2>Projetos Profissionais</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/nssbs.jpg" alt="...">
-                <h3>Site de um Restaurante</h3>
-                <p>Desenvolvimento do site do Naruto Sushi SBS. Tecnologias Utilizadas:
-Backend Python e Django 
-Frontend Bootstrap</p>
-                <a href="https://narutosushi.com.br">Ver Projeto</a>
+    <header class="hero" id="home">
+        <div class="hero-content container">
+            <p class="hero-tag">Desenvolvedor Full Stack</p>
+            <h1>Edinei Miguel Zanol</h1>
+            <p class="hero-subtitle">Construo produtos web performáticos, seguros e escaláveis com foco em experiência profissional e design moderno.</p>
+            <div class="hero-actions">
+                <a href="#projetos-profissionais" class="btn btn-highlight">Ver projetos</a>
+                <a href="#contato" class="btn btn-outline-light">Contato</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://br.linkedin.com/in/edinei-zanol-0718b3266" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/EdineiMZ" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/edinei_zanol/profilecard/?igsh=cWE4a21wNWkyeDNv" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/projetogestao.jpg" alt="Sistema para empresa">
-                <h3>Sistema para gestão de Clientes</h3>
-                <p>Sistema para empresa, gestão de clientes e pagamentos.
-Tecnologias Utilizadas:
-Backend NodeJS, integração com Google Play e APIs de validção de dados
-Banco de dados Postgres SQL
-Frontend utilizado Bootstrap 
- </p>
-                <a href="#">Ver Mais</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/projetomabfy.jpg" alt="Mabfy">
-                <h3>Desenvolvimento na empresa Mabfy</h3>
-                <p>Desenvolmento Web Fullstack na empresa Mabfy </p>
-                <a href="https://mabfy.com.br/">Ver Mais</a>
-            </div>
-        </div>
-    </div>
-</section>
+    </header>
 
-<!-- Projetos Pessoais -->
-<section class="container" id="projetos-pessoais">
-    <h2>Projetos Pessoais</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/ftp_server_python.jpg" alt="Servidor FTP em Python">
-                <h3>Servidor FTP em Python</h3>
-                <p>Um servidor simples para hospedagem e transferência de arquivos</p>
-                <a href="#">Ver Mais</a>
+    <main>
+        <section class="container section" id="sobre-mim">
+            <h2>Sobre mim</h2>
+            <div class="about-me glass-card reveal-on-scroll">
+                <img src="imgs/profile.jpg" alt="Edinei Zanol" class="profile-img">
+                <div class="about-me-text">
+                    <p>Sou desenvolvedor Full Stack apaixonado por tecnologia, arquitetura de software e interfaces profissionais. Atuo na criação de soluções digitais que unem backend robusto, frontend responsivo e integração com APIs para resolver desafios reais de negócio.</p>
+                    <p>Tenho experiência com desenvolvimento web, automações e produtos orientados a performance, sempre priorizando qualidade de código, segurança e boa experiência do usuário.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/portfolioimg.jpg" alt="Projeto Pessoal 2">
-                <h3>Portfólio</h3>
-                <p>Criação do meu portfólio utilizando HTML, CSS e JavaScript.</p>
-                <a href="#">Ver Mais</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/discordbot.jpg" alt="GeekTec">
-                <h3>GeekTec  Discord BOT</h3>
-                <p>Desenvolvimento de um BOT para a Ferramenta Discord
-Utilizando JavaScript, TypeScript e integração com APIs. Link para meu Servidor do Discord</p>
-                <a href="https://www.discord.gg/4tYjBsnZ7a">Ver Mais</a>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Eventos -->
-<section class="container" id="eventos">
-    <h2>Eventos</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/latinoware2.jpg" alt="Latinoware 2022">
-                <h3>Latinoware 2022</h3>
-                <p>Participação no Congresso Latino-americano de Software Livre e Tecnologias Abertas</p>
+        <section class="container section" id="competencias">
+            <h2>Tecnologias principais</h2>
+            <div class="skills-grid">
+                <article class="skill-card reveal-on-scroll"><i class="fab fa-python"></i><h3>Python</h3></article>
+                <article class="skill-card reveal-on-scroll"><i class="fab fa-js"></i><h3>JavaScript</h3></article>
+                <article class="skill-card reveal-on-scroll"><i class="fab fa-react"></i><h3>React</h3></article>
+                <article class="skill-card reveal-on-scroll"><i class="fab fa-node-js"></i><h3>Node.js</h3></article>
+                <article class="skill-card reveal-on-scroll"><i class="fab fa-java"></i><h3>Java</h3></article>
+                <article class="skill-card reveal-on-scroll"><i class="fas fa-database"></i><h3>PostgreSQL</h3></article>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/startupweekend.jpg" alt="Jornada no Oeste">
-                <h3>Jornada no Oeste Startup Weekend</h3>
-                <p>Participação no Startup Weekend | Desenvolvimento de um projeto de statup em 54 horas |
-                Recebemos menção honrosa</p>
+        </section>
+
+        <section class="container section" id="projetos-profissionais">
+            <h2>Projetos profissionais</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/nssbs.jpg" alt="Site do Naruto Sushi SBS">
+                        <h3>Site Restaurante Naruto Sushi</h3>
+                        <p>Projeto institucional com foco em presença digital, experiência mobile e otimização de carregamento.</p>
+                        <span class="tech-badge">Python • Django • Bootstrap</span>
+                        <a href="https://narutosushi.com.br" target="_blank" rel="noopener noreferrer">Acessar projeto</a>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/projetogestao.jpg" alt="Sistema de gestão de clientes">
+                        <h3>Sistema de Gestão de Clientes</h3>
+                        <p>Plataforma para gestão de cadastros e pagamentos com integrações de APIs e validação de dados.</p>
+                        <span class="tech-badge">Node.js • PostgreSQL • APIs</span>
+                        <a href="#">Projeto sob NDA</a>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/projetomabfy.jpg" alt="Desenvolvimento na empresa Mabfy">
+                        <h3>Desenvolvimento Full Stack na Mabfy</h3>
+                        <p>Participação na evolução de soluções web com melhorias de usabilidade e arquitetura.</p>
+                        <span class="tech-badge">Full Stack • Web • Produto</span>
+                        <a href="https://mabfy.com.br/" target="_blank" rel="noopener noreferrer">Ver empresa</a>
+                    </article>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="imgs/hackaton.jpg" alt="Em breve">
-                <h3>HACKATHON TIC</h3>
-                <p>Participação no Hackathon TIC | Desenvolvimento de uma aplicacão completa em 56 horas</p>
+        </section>
+
+        <section class="container section" id="projetos-pessoais">
+            <h2>Projetos pessoais</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/ftp_server_python.jpg" alt="Servidor FTP em Python">
+                        <h3>Servidor FTP em Python</h3>
+                        <p>Solução para transferência e hospedagem de arquivos com estrutura modular.</p>
+                        <span class="tech-badge">Python • Redes • Arquivos</span>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/portfolioimg.jpg" alt="Projeto de portfólio">
+                        <h3>Portfólio Profissional</h3>
+                        <p>Landing page com animações, tema dinâmico e foco em apresentação visual.</p>
+                        <span class="tech-badge">HTML • CSS • JavaScript</span>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/discordbot.jpg" alt="Bot para Discord">
+                        <h3>GeekTec Discord Bot</h3>
+                        <p>Bot para comunidade no Discord com comandos personalizados e integrações.</p>
+                        <span class="tech-badge">TypeScript • APIs • Discord</span>
+                        <a href="https://www.discord.gg/4tYjBsnZ7a" target="_blank" rel="noopener noreferrer">Entrar no servidor</a>
+                    </article>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-
-<!-- Adicionando uma seção de depoimentos 
-<section class="container" id="depoimentos">
-    <h2>Depoimentos</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="/imgs/evento3.jpg" alt="...">
-                <p></p>
+        <section class="container section" id="eventos">
+            <h2>Eventos e comunidade</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/latinoware2.jpg" alt="Latinoware 2022">
+                        <h3>Latinoware 2022</h3>
+                        <p>Congresso latino-americano voltado a software livre e tecnologias abertas.</p>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/startupweekend.jpg" alt="Startup Weekend">
+                        <h3>Jornada no Oeste Startup Weekend</h3>
+                        <p>Desenvolvimento de startup em 54 horas com menção honrosa.</p>
+                    </article>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <article class="portfolio-item reveal-on-scroll">
+                        <img src="imgs/hackaton.jpg" alt="Hackathon TIC">
+                        <h3>Hackathon TIC</h3>
+                        <p>Construção de aplicação completa em equipe, com foco em entrega rápida.</p>
+                    </article>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="/imgs/evento3.jpg" alt="...">
-                <p></p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="portfolio-item">
-                <img src="/imgs/evento3.jpg" alt="...">
-                <p></p>
-            </div>
-        </div>
-    </div>
-</section> -->
+        </section>
+    </main>
 
-<!-- Ícone flutuante do WhatsApp -->
-<a href="https://wa.me/5549991943662" target="_blank" class="whatsapp-float">
-    <i class="fab fa-whatsapp"></i>
-</a>
+    <a href="https://wa.me/5549991943662" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Contato pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-<footer id="contato">
-    <p>&copy; 2024 Edinei Miguel Zanol - Todos os direitos reservados.</p>
-</footer>
+    <footer id="contato">
+        <p>&copy; 2024 Edinei Miguel Zanol • Desenvolvedor Full Stack</p>
+    </footer>
 
-<script src="js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
+    <script src="js/script.js"></script>
 </body>
 </html>
