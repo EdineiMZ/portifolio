@@ -577,7 +577,7 @@
 
             //===== CÓDIGO PARA CARREGAR SEU TÊNIS/ROUPA 3D REAL ===== 
             const loader = new THREE.GLTFLoader();
-            loader.load('./casa.glb', function (gltf) {
+            loader.load('casa.glb', function (gltf) {
                 scene.remove(object3D); // Remove o cubo
                 object3D = gltf.scene;
                 
