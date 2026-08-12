@@ -27,6 +27,22 @@
             color: var(--text-color);
             overflow-x: hidden;
             overflow-y: hidden;
+            transition: filter 0.1s;
+        }
+
+        /* Efeito Glitch para Easter Egg */
+        .glitch-active {
+            animation: glitch-anim 0.3s infinite;
+            filter: invert(1) hue-rotate(180deg) contrast(150%);
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(2px, 2px); }
+            20% { transform: translate(-2px, -2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(-1px, 1px); }
         }
 
         /* Efeito de Ruído Cinemático */
@@ -51,7 +67,7 @@
             100% { transform: translate(5%, 0); }
         }
 
-        /* Tela de Interação Inicial (Necessário para habilitar áudio) */
+        /* Telas de Interação e Boot */
         #init-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #000; z-index: 10000; display: flex;
@@ -71,7 +87,6 @@
             box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
         }
 
-        /* Terminal de Boot */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #000; z-index: 9999; display: none; flex-direction: column;
@@ -90,10 +105,19 @@
 
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Background 3D */
+        /* Easter Egg Terminal */
+        #easter-egg-terminal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80vw; max-width: 600px; background: rgba(0, 20, 0, 0.95);
+            border: 1px solid #0f0; z-index: 10001; display: none;
+            padding: 30px; border-radius: 10px; box-shadow: 0 0 50px rgba(0, 255, 0, 0.2);
+            font-family: 'Fira Code', monospace; color: #0f0; text-shadow: 0 0 5px #0f0;
+        }
+
+        /* Background 3D Global */
         #webgl-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; pointer-events: none;
+            z-index: -1; pointer-events: none; transition: opacity 1s;
         }
 
         #main-content { opacity: 0; visibility: hidden; }
@@ -108,11 +132,9 @@
         .top-nav a { color: #ccc; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .top-nav a:hover { color: var(--accent-color); }
 
-        /* Secoes Gerais */
         section { min-height: 100vh; padding: 100px 5%; display: flex; flex-direction: column; justify-content: center; position: relative; }
         h2 { font-size: 4rem; font-weight: 900; margin-bottom: 50px; text-align: center; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.5); }
 
-        /* Hero Scene */
         .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; perspective: 1000px; }
         .hero-content { transform-style: preserve-3d; max-width: 900px; z-index: 10; background: var(--glass-bg); padding: 60px; border-radius: 30px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); width: 100%; }
         .hero h1 { font-size: 5.5rem; font-weight: 900; margin-bottom: 20px; transform: translateZ(80px); background: linear-gradient(90deg, #fff, var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
@@ -120,7 +142,6 @@
         .hero-tag { font-family: 'Fira Code', monospace; color: var(--accent-color); margin-bottom: 15px; letter-spacing: 2px; transform: translateZ(30px); display: inline-block; padding: 5px 15px; border: 1px solid var(--accent-color); border-radius: 5px; font-size: 0.9rem; }
         .hero-metrics { display: flex; gap: 40px; justify-content: center; transform: translateZ(60px); font-family: 'Fira Code', monospace; }
 
-        /* 3D Cards Grid */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; perspective: 1000px; width: 100%; }
         .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; backdrop-filter: blur(10px); transform-style: preserve-3d; transition: border-color 0.3s; }
         .glass-card:hover { border-color: var(--accent-color); }
@@ -128,7 +149,6 @@
         .glass-card p { color: #aaa; transform: translateZ(20px); line-height: 1.6; }
         .glass-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 20px; transform: translateZ(60px); }
 
-        /* Projetos Horizontal Scroll */
         .projects-wrapper { overflow-x: hidden; width: 100%; }
         .projects-container { display: flex; width: 300vw; gap: 50px; padding: 50px 5%; }
         .project-card { width: 800px; height: 500px; background: #000; border: 1px solid var(--glass-border); border-radius: 20px; display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; position: relative; overflow: hidden; flex-shrink: 0; }
@@ -137,7 +157,14 @@
         .project-info { z-index: 1; transform: translateZ(50px); }
         .tech-badge { font-family: 'Fira Code', monospace; background: rgba(0, 255, 204, 0.1); color: var(--accent-color); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-bottom: 10px; border: 1px solid rgba(0, 255, 204, 0.3); }
 
-        /* Cyber Button Contato */
+        /* Container Específico para o Objeto 3D no Laboratório */
+        .lab-3d-wrapper {
+            width: 100%; height: 400px; border-radius: 20px; overflow: hidden;
+            position: relative; border: 1px solid var(--glass-border); background: #000;
+            margin-top: 20px;
+        }
+        #lab-canvas-container { width: 100%; height: 100%; }
+
         .cyber-button {
             display: inline-block; padding: 15px 40px; background: transparent; color: var(--accent-color);
             font-family: 'Fira Code', monospace; font-size: 1.2rem; font-weight: bold; text-decoration: none;
@@ -148,7 +175,6 @@
 
         footer { text-align: center; padding: 50px; font-family: 'Fira Code', monospace; color: #555; font-size: 0.9rem; border-top: 1px solid var(--glass-border); background: #030303;}
 
-        /* MEDIA QUERIES PARA MOBILE */
         @media (max-width: 768px) {
             .top-nav { width: 90%; padding: 10px 20px; gap: 15px; justify-content: center; flex-wrap: wrap; }
             .top-nav a { font-size: 0.7rem; }
@@ -158,12 +184,11 @@
             .hero-subtitle { font-size: 1rem; transform: translateZ(20px); margin-bottom: 30px; }
             .hero-metrics { gap: 20px; flex-direction: column; transform: translateZ(20px); }
             .glass-card { padding: 30px; }
-            .glass-card h3 { font-size: 1.5rem; }
             .projects-wrapper { overflow-x: visible; }
             .projects-container { width: 100%; flex-direction: column; padding: 20px 0; gap: 30px; }
             .project-card { width: 100%; height: 350px; padding: 25px; }
             .project-info h3 { font-size: 1.8rem !important; }
-            .cyber-button { font-size: 1rem; padding: 12px 25px; }
+            .lab-3d-wrapper { height: 300px; }
         }
     </style>
 </head>
@@ -171,7 +196,7 @@
 
     <div class="noise"></div>
 
-    <!-- Tela de Interação para Habilitar Áudio -->
+    <!-- Tela de Interação para Habilitar Áudio & WebGL Lazy Load -->
     <div id="init-screen">
         <button id="init-btn">> Iniciar_Sistema</button>
     </div>
@@ -182,7 +207,16 @@
         <div class="terminal-line"><span id="typewriter"></span><span class="cursor"></span></div>
     </div>
 
-    <!-- Canvas 3D -->
+    <!-- Easter Egg Modal -->
+    <div id="easter-egg-terminal">
+        <p>> ROOT ACCESS GRANTED.</p>
+        <p>> INITIATING SECURITY AUDIT...</p>
+        <p>> VULNERABILITY FOUND IN SECTOR 7G.</p>
+        <p>> REDIRECTING TO SECRET PROTOCOL...</p>
+        <a href="https://github.com/EdineiMZ" target="_blank" style="color: #fff; background: #0f0; padding: 10px; display: inline-block; margin-top: 20px; text-decoration: none; color: #000; font-weight: bold;">[ ACESSAR GITHUB ROOT ]</a>
+    </div>
+
+    <!-- Canvas 3D Background -->
     <canvas id="webgl-canvas"></canvas>
 
     <main id="main-content">
@@ -255,16 +289,24 @@
             </div>
         </section>
 
-        <!-- Seção Final e Clímax -->
+        <!-- Seção Final: Laboratório 3D -->
         <section id="lab" style="min-height: auto; padding-bottom: 100px;">
             <h2 class="gsap-fade">Laboratório Criativo</h2>
-            <div class="grid-container" style="margin-bottom: 80px;">
-                <div class="glass-card gsap-card" data-tilt>
+            
+            <div class="grid-container" style="margin-bottom: 40px;">
+                <div class="glass-card gsap-card">
                     <i class="fas fa-cube"></i>
-                    <h3>Animação 3D</h3>
-                    <p>Produção de comerciais animados em 3D de alta qualidade, explorando texturas, iluminação e design voltados para marcas de streetwear.</p>
+                    <h3>Animação & Modelagem</h3>
+                    <p>Produção de comerciais animados em 3D de alta qualidade, explorando texturas, iluminação e design voltados para marcas de moda e streetwear.</p>
+                    
+                    <!-- Container do Objeto 3D Interativo -->
+                    <div class="lab-3d-wrapper">
+                        <div id="lab-canvas-container"></div>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--accent-color);">Arraste para interagir</p>
                 </div>
-                <div class="glass-card gsap-card" data-tilt>
+
+                <div class="glass-card gsap-card" data-tilt style="display: flex; flex-direction: column; justify-content: center;">
                     <i class="fas fa-bolt"></i>
                     <h3>Sincronia Audiovisual</h3>
                     <p>Edição agressiva de projetos em vídeo, mapeando reações intensas e integrando cortes precisos sincronizados com trilhas sonoras fortes (ex: <i>Idol</i>).</p>
@@ -290,98 +332,112 @@
 
     <!-- Bibliotecas Externas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
         /* =========================================
-           0. SÍNTESE DE ÁUDIO (Web Audio API)
+           EASTER EGG (Security Audit)
+           ========================================= */
+        let keySequence = '';
+        const secretCode = 'sudo';
+        
+        document.addEventListener('keydown', (e) => {
+            keySequence += e.key.toLowerCase();
+            if (keySequence.length > secretCode.length) {
+                keySequence = keySequence.substring(1);
+            }
+            if (keySequence === secretCode) {
+                document.body.classList.add('glitch-active');
+                document.getElementById('easter-egg-terminal').style.display = 'block';
+                // Áudio agressivo
+                if (audioCtx) {
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                    osc.connect(audioCtx.destination);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                }
+            }
+        });
+
+        /* =========================================
+           SÍNTESE DE ÁUDIO & VARIÁVEL DE SINCRONIA
            ========================================= */
         let audioCtx;
+        let globalAudioPulse = 0; // Usado para sincronizar o WebGL
 
         function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        // Bipe de digitação do terminal (curto e rápido)
         function playTypingSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'square';
-            // Frequência aleatória para dar textura mecânica
             osc.frequency.setValueAtTime(800 + Math.random() * 200, audioCtx.currentTime);
             
             gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
             
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+
+            globalAudioPulse = 0.5; // Faz o 3D pulsar a cada tecla
         }
 
-        // Bipe longo de sucesso de login
         function playSuccessSound() {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'sine';
-            
             osc.frequency.setValueAtTime(440, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
             
             gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
             
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.5);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+
+            globalAudioPulse = 2.0; // Pulso forte no sucesso
         }
 
         /* =========================================
-           1. TERMINAL BOOT SEQUENCE
+           TERMINAL BOOT SEQUENCE
            ========================================= */
         const bootLines = [
-            "> Inicializando dispositivo mobile/desktop...",
-            "> Resolvendo host seguro: edinei.dev...",
-            "> Carregando módulos: [Web, Mobile, 3D]... OK",
-            "> Estabelecendo ambiente WebGL...",
-            "> Acesso Autorizado."
+            "> Inicializando kernel de visualização...",
+            "> Carregando módulos Otimizados (FPS Monitor)... OK",
+            "> Estabelecendo ponte Web Audio API...",
+            "> Acesso Root Autorizado."
         ];
         
         let lineIndex = 0; let charIndex = 0;
         const typewriterElement = document.getElementById('typewriter');
         const terminalContent = document.getElementById('terminal-content');
         const bootScreen = document.getElementById('boot-screen');
-        const mainContent = document.getElementById('main-content');
         const initScreen = document.getElementById('init-screen');
 
-        // Disparo via botão inicial
         document.getElementById('init-btn').addEventListener('click', () => {
-            initAudio(); // Libera o som no navegador
+            initAudio(); 
+            initGlobalWebGL(); // Lazy Load do 3D principal
+            initLabWebGL();    // Inicia a peça de Streetwear do Lab
             initScreen.style.display = 'none';
             bootScreen.style.display = 'flex';
-            typeLine(); // Inicia a digitação
+            typeLine(); 
         });
 
         function typeLine() {
             if (lineIndex < bootLines.length) {
                 if (charIndex < bootLines[lineIndex].length) {
                     typewriterElement.textContent += bootLines[lineIndex].charAt(charIndex);
-                    
-                    // Som de digitação a cada 2 ou 3 caracteres para não saturar
                     if (charIndex % 2 === 0) playTypingSound();
-                    
                     charIndex++;
                     setTimeout(typeLine, Math.random() * 20 + 10);
                 } else {
@@ -393,10 +449,7 @@
                     typewriterElement.textContent = '';
                     charIndex = 0; lineIndex++;
                     
-                    // Se for a última linha (Sucesso) toca o som melódico
-                    if (lineIndex === bootLines.length) {
-                        playSuccessSound();
-                    }
+                    if (lineIndex === bootLines.length) playSuccessSound();
                     setTimeout(typeLine, 200);
                 }
             } else {
@@ -404,8 +457,8 @@
                     gsap.to(bootScreen, { opacity: 0, duration: 0.8, onComplete: () => {
                         bootScreen.style.display = 'none';
                         document.body.style.overflowY = 'auto';
-                        mainContent.style.visibility = 'visible';
-                        gsap.to(mainContent, { opacity: 1, duration: 1 });
+                        document.getElementById('main-content').style.visibility = 'visible';
+                        gsap.to('#main-content', { opacity: 1, duration: 1 });
                         initSiteAnimations();
                     }});
                 }, 600);
@@ -413,59 +466,150 @@
         }
 
         /* =========================================
-           2. AMBIENTE 3D WEBGL (Otimizado Mobile)
+           AMBIENTE 3D GLOBAL (Fundo) + EXTREME OPTIMIZATION
            ========================================= */
-        const canvas = document.getElementById('webgl-canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 30;
+        let globalScene, globalCamera, globalRenderer, torusKnot;
+        let webGLActive = true; 
 
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        function initGlobalWebGL() {
+            const canvas = document.getElementById('webgl-canvas');
+            globalScene = new THREE.Scene();
+            globalCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            globalCamera.position.z = 30;
 
-        const geometry = new THREE.TorusKnotGeometry(10, 3, 70, 12);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.12
-        });
-        const torusKnot = new THREE.Mesh(geometry, material);
-        scene.add(torusKnot);
+            globalRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+            globalRenderer.setSize(window.innerWidth, window.innerHeight);
+            globalRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-        let mouseX = 0; let mouseY = 0;
-        let targetX = 0; let targetY = 0;
-        const windowHalfX = window.innerWidth / 2;
-        const windowHalfY = window.innerHeight / 2;
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 70, 12);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.12
+            });
+            torusKnot = new THREE.Mesh(geometry, material);
+            globalScene.add(torusKnot);
 
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - windowHalfX);
-            mouseY = (event.clientY - windowHalfY);
-        });
+            let mouseX = 0; let mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+                mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+            });
 
-        const clock = new THREE.Clock();
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            const elapsedTime = clock.getElapsedTime();
+            // FPS Monitor Logic
+            const clock = new THREE.Clock();
+            let frames = 0; let lastTime = performance.now();
+            let lowFpsCount = 0;
 
-            torusKnot.rotation.y = elapsedTime * 0.15;
-            torusKnot.rotation.x = elapsedTime * 0.1;
+            function animateGlobal3D() {
+                if (!webGLActive) return; // Fallback cancela o loop
+                requestAnimationFrame(animateGlobal3D);
+                
+                // Monitoramento de Performance (FPS)
+                frames++;
+                const now = performance.now();
+                if (now - lastTime >= 1000) {
+                    if (frames < 20) lowFpsCount++;
+                    else lowFpsCount = 0;
+                    
+                    if (lowFpsCount > 3) {
+                        console.warn("> FPS Drop detectado. Desativando WebGL para garantir performance.");
+                        canvas.style.opacity = '0';
+                        setTimeout(() => { webGLActive = false; }, 1000);
+                    }
+                    frames = 0; lastTime = now;
+                }
 
-            targetX = mouseX * 0.001;
-            targetY = mouseY * 0.001;
-            torusKnot.rotation.y += 0.05 * (targetX - torusKnot.rotation.y);
-            torusKnot.rotation.x += 0.05 * (targetY - torusKnot.rotation.x);
+                const elapsedTime = clock.getElapsedTime();
+                torusKnot.rotation.y = elapsedTime * 0.15;
+                torusKnot.rotation.x = elapsedTime * 0.1;
 
-            renderer.render(scene, camera);
+                torusKnot.rotation.y += 0.05 * (mouseX - torusKnot.rotation.y);
+                torusKnot.rotation.x += 0.05 * (mouseY - torusKnot.rotation.x);
+
+                // AUDIO VISUALIZER: Aplica a pulsação do áudio no tamanho do nó 3D
+                const scale = 1 + globalAudioPulse;
+                torusKnot.scale.set(scale, scale, scale);
+                globalAudioPulse *= 0.9; // Decaimento suave
+
+                globalRenderer.render(globalScene, globalCamera);
+            }
+            animateGlobal3D();
+
+            window.addEventListener('resize', () => {
+                globalCamera.aspect = window.innerWidth / window.innerHeight;
+                globalCamera.updateProjectionMatrix();
+                globalRenderer.setSize(window.innerWidth, window.innerHeight);
+            });
         }
-        animate3D();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
 
         /* =========================================
-           3. ANIMAÇÕES GSAP (Desktop vs Mobile)
+           LAB 3D: RENDERIZADOR ESPECÍFICO (Streetwear)
+           ========================================= */
+        function initLabWebGL() {
+            const container = document.getElementById('lab-canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.z = 5;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.enableZoom = false;
+
+            // Iluminação para modelos 3D
+            const light = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(light);
+            const directionalLight = new THREE.DirectionalLight(0x00ffcc, 1);
+            directionalLight.position.set(2, 2, 5);
+            scene.add(directionalLight);
+
+            // MODELO DE FALLBACK (Holo-Cubo). 
+            // SUBSTITUA ISSO pelo seu modelo GLTF descomentando o código abaixo.
+            const geometry = new THREE.IcosahedronGeometry(1.5, 0);
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0x00ffcc, wireframe: true, emissive: 0x004422 
+            });
+            let object3D = new THREE.Mesh(geometry, material);
+            scene.add(object3D);
+
+            //===== CÓDIGO PARA CARREGAR SEU TÊNIS/ROUPA 3D REAL ===== 
+            const loader = new THREE.GLTFLoader();
+            loader.load('./casa.glb', function (gltf) {
+                scene.remove(object3D); // Remove o cubo
+                object3D = gltf.scene;
+                
+                // Ajusta o tamanho se vier muito grande/pequeno
+                object3D.scale.set(0.5, 0.5, 0.5); 
+                
+                // Centraliza
+                const box = new THREE.Box3().setFromObject(object3D);
+                const center = box.getCenter(new THREE.Vector3());
+                object3D.position.sub(center);
+                
+                scene.add(object3D);
+            });
+          //  ======================================================= */
+
+            function animateLab() {
+                requestAnimationFrame(animateLab);
+                if (object3D) object3D.rotation.y += 0.005;
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animateLab();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        /* =========================================
+           ANIMAÇÕES GSAP
            ========================================= */
         gsap.registerPlugin(ScrollTrigger);
 
@@ -481,43 +625,27 @@
 
             let mm = gsap.matchMedia();
 
-            // DESKTOP (Animação Horizontal)
             mm.add("(min-width: 769px)", () => {
                 const projectsContainer = document.querySelector('.projects-container');
                 gsap.to(projectsContainer, {
                     x: () => -(projectsContainer.scrollWidth - window.innerWidth + 100) + "px",
                     ease: "none",
                     scrollTrigger: {
-                        trigger: ".projects-wrapper",
-                        start: "top top",
+                        trigger: ".projects-wrapper", start: "top top",
                         end: () => "+=" + projectsContainer.scrollWidth,
-                        pin: true,
-                        scrub: 1,
-                        invalidateOnRefresh: true
+                        pin: true, scrub: 1, invalidateOnRefresh: true
                     }
                 });
-                
-                VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-                    max: 8, speed: 400, glare: true, "max-glare": 0.1,
-                });
+                VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 8, speed: 400, glare: true, "max-glare": 0.1 });
             });
 
-            // MOBILE (Aparecimento Vertical)
             mm.add("(max-width: 768px)", () => {
                 gsap.utils.toArray('.project-card').forEach((card) => {
-                    gsap.from(card, {
-                        scrollTrigger: { trigger: card, start: "top 85%" },
-                        y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-                    });
+                    gsap.from(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 30, opacity: 0, duration: 0.8, ease: "power3.out" });
                 });
-                
-                const tiltElements = document.querySelectorAll("[data-tilt]");
-                tiltElements.forEach(el => {
-                    if(el.vanillaTilt) el.vanillaTilt.destroy();
-                });
+                document.querySelectorAll("[data-tilt]").forEach(el => { if(el.vanillaTilt) el.vanillaTilt.destroy(); });
             });
         }
     </script>
 </body>
-</html>w
-        
+</html>
