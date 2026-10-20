@@ -2,650 +2,380 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Edinei Zanol | System Boot...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edinei Zanol | Desenvolvedor Full Stack</title>
+    <meta name="description" content="Edinei Zanol — desenvolvedor full stack e analista de suporte técnico em São Miguel do Oeste/SC. PostgreSQL, APIs, IA aplicada, infraestrutura e suporte.">
+    <meta name="author" content="Edinei Miguel Zanol">
     <meta name="theme-color" content="#030303">
-    
-    <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Open Graph (prévia ao compartilhar o link) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Edinei Zanol | Desenvolvedor Full Stack">
+    <meta property="og:description" content="PostgreSQL, APIs, IA aplicada, infraestrutura e suporte técnico.">
+    <meta property="og:image" content="imgs/profile.jpg">
+    <meta property="og:locale" content="pt_BR">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23030303'/%3E%3Ctext x='5' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%2300ffcc'%3E%3E_%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-color: #030303;
-            --text-color: #f0f0f0;
-            --accent-color: #00ffcc;
-            --glass-bg: rgba(10, 10, 12, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.08);
-        }
+    <link rel="stylesheet" href="css/style.css">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            overflow-y: hidden;
-            transition: filter 0.1s;
-        }
-
-        /* Efeito Glitch para Easter Egg */
-        .glitch-active {
-            animation: glitch-anim 0.3s infinite;
-            filter: invert(1) hue-rotate(180deg) contrast(150%);
-        }
-
-        @keyframes glitch-anim {
-            0% { transform: translate(2px, 2px); }
-            20% { transform: translate(-2px, -2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, 2px); }
-            80% { transform: translate(1px, -1px); }
-            100% { transform: translate(-1px, 1px); }
-        }
-
-        /* Efeito de Ruído Cinemático */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9998; opacity: 0.04;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png');
-            animation: noiseAnim 0.2s infinite;
-        }
-
-        @keyframes noiseAnim {
-            0% { transform: translate(0,0); }
-            10% { transform: translate(-5%, -5%); }
-            20% { transform: translate(-10%, 5%); }
-            30% { transform: translate(5%, -10%); }
-            40% { transform: translate(-5%, 15%); }
-            50% { transform: translate(-10%, 5%); }
-            60% { transform: translate(15%, 0); }
-            70% { transform: translate(0, 10%); }
-            80% { transform: translate(-15%, 0); }
-            90% { transform: translate(10%, 5%); }
-            100% { transform: translate(5%, 0); }
-        }
-
-        /* Telas de Interação e Boot */
-        #init-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000; z-index: 10000; display: flex;
-            align-items: center; justify-content: center;
-        }
-
-        #init-btn {
-            background: transparent; border: 1px solid var(--accent-color);
-            color: var(--accent-color); font-family: 'Fira Code', monospace;
-            font-size: 1.2rem; padding: 15px 30px; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
-        }
-
-        #init-btn:hover {
-            background: var(--accent-color); color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
-        }
-
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000; z-index: 9999; display: none; flex-direction: column;
-            justify-content: center; padding: 5%; font-family: 'Fira Code', monospace;
-        }
-
-        .terminal-line {
-            color: var(--accent-color); font-size: 1.2rem; margin-bottom: 10px;
-            opacity: 0; text-shadow: 0 0 5px var(--accent-color);
-        }
-
-        .cursor {
-            display: inline-block; width: 10px; height: 1.2rem;
-            background-color: var(--accent-color); animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* Easter Egg Terminal */
-        #easter-egg-terminal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80vw; max-width: 600px; background: rgba(0, 20, 0, 0.95);
-            border: 1px solid #0f0; z-index: 10001; display: none;
-            padding: 30px; border-radius: 10px; box-shadow: 0 0 50px rgba(0, 255, 0, 0.2);
-            font-family: 'Fira Code', monospace; color: #0f0; text-shadow: 0 0 5px #0f0;
-        }
-
-        /* Background 3D Global */
-        #webgl-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; pointer-events: none; transition: opacity 1s;
-        }
-
-        #main-content { opacity: 0; visibility: hidden; }
-
-        /* Nav Flutuante */
-        .top-nav {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(15px);
-            padding: 15px 30px; border-radius: 50px; border: 1px solid var(--glass-border);
-            display: flex; gap: 20px; z-index: 100; white-space: nowrap;
-        }
-        .top-nav a { color: #ccc; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
-        .top-nav a:hover { color: var(--accent-color); }
-
-        section { min-height: 100vh; padding: 100px 5%; display: flex; flex-direction: column; justify-content: center; position: relative; }
-        h2 { font-size: 4rem; font-weight: 900; margin-bottom: 50px; text-align: center; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.5); }
-
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; perspective: 1000px; }
-        .hero-content { transform-style: preserve-3d; max-width: 900px; z-index: 10; background: var(--glass-bg); padding: 60px; border-radius: 30px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); width: 100%; }
-        .hero h1 { font-size: 5.5rem; font-weight: 900; margin-bottom: 20px; transform: translateZ(80px); background: linear-gradient(90deg, #fff, var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
-        .hero-subtitle { font-size: 1.2rem; color: #aaa; margin-bottom: 40px; transform: translateZ(50px); }
-        .hero-tag { font-family: 'Fira Code', monospace; color: var(--accent-color); margin-bottom: 15px; letter-spacing: 2px; transform: translateZ(30px); display: inline-block; padding: 5px 15px; border: 1px solid var(--accent-color); border-radius: 5px; font-size: 0.9rem; }
-        .hero-metrics { display: flex; gap: 40px; justify-content: center; transform: translateZ(60px); font-family: 'Fira Code', monospace; }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; perspective: 1000px; width: 100%; }
-        .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 40px; backdrop-filter: blur(10px); transform-style: preserve-3d; transition: border-color 0.3s; }
-        .glass-card:hover { border-color: var(--accent-color); }
-        .glass-card h3 { font-size: 1.8rem; margin-bottom: 15px; transform: translateZ(40px); }
-        .glass-card p { color: #aaa; transform: translateZ(20px); line-height: 1.6; }
-        .glass-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 20px; transform: translateZ(60px); }
-
-        .projects-wrapper { overflow-x: hidden; width: 100%; }
-        .projects-container { display: flex; width: 300vw; gap: 50px; padding: 50px 5%; }
-        .project-card { width: 800px; height: 500px; background: #000; border: 1px solid var(--glass-border); border-radius: 20px; display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; position: relative; overflow: hidden; flex-shrink: 0; }
-        .project-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; transition: transform 0.5s, opacity 0.5s; z-index: 0; }
-        .project-card:hover img { opacity: 0.6; transform: scale(1.05); }
-        .project-info { z-index: 1; transform: translateZ(50px); }
-        .tech-badge { font-family: 'Fira Code', monospace; background: rgba(0, 255, 204, 0.1); color: var(--accent-color); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-bottom: 10px; border: 1px solid rgba(0, 255, 204, 0.3); }
-
-        /* Container Específico para o Objeto 3D no Laboratório */
-        .lab-3d-wrapper {
-            width: 100%; height: 400px; border-radius: 20px; overflow: hidden;
-            position: relative; border: 1px solid var(--glass-border); background: #000;
-            margin-top: 20px;
-        }
-        #lab-canvas-container { width: 100%; height: 100%; }
-
-        .cyber-button {
-            display: inline-block; padding: 15px 40px; background: transparent; color: var(--accent-color);
-            font-family: 'Fira Code', monospace; font-size: 1.2rem; font-weight: bold; text-decoration: none;
-            border: 1px solid var(--accent-color); position: relative; overflow: hidden; transition: all 0.3s;
-            cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px;
-        }
-        .cyber-button:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 20px var(--accent-color); transform: scale(1.05); }
-
-        footer { text-align: center; padding: 50px; font-family: 'Fira Code', monospace; color: #555; font-size: 0.9rem; border-top: 1px solid var(--glass-border); background: #030303;}
-
-        @media (max-width: 768px) {
-            .top-nav { width: 90%; padding: 10px 20px; gap: 15px; justify-content: center; flex-wrap: wrap; }
-            .top-nav a { font-size: 0.7rem; }
-            h2 { font-size: 2.5rem; margin-bottom: 30px; }
-            .hero-content { padding: 30px 20px; }
-            .hero h1 { font-size: 2.8rem; transform: translateZ(30px); }
-            .hero-subtitle { font-size: 1rem; transform: translateZ(20px); margin-bottom: 30px; }
-            .hero-metrics { gap: 20px; flex-direction: column; transform: translateZ(20px); }
-            .glass-card { padding: 30px; }
-            .projects-wrapper { overflow-x: visible; }
-            .projects-container { width: 100%; flex-direction: column; padding: 20px 0; gap: 30px; }
-            .project-card { width: 100%; height: 350px; padding: 25px; }
-            .project-info h3 { font-size: 1.8rem !important; }
-            .lab-3d-wrapper { height: 300px; }
-        }
-    </style>
+    <!-- Sem JavaScript: mostra o conteúdo direto, sem a tela de boot -->
+    <noscript>
+        <style>
+            #init-screen, #boot-screen { display: none !important; }
+            body { overflow-y: auto !important; }
+            #main-content { opacity: 1 !important; visibility: visible !important; }
+        </style>
+    </noscript>
 </head>
-<body>
+<body class="is-locked">
 
-    <div class="noise"></div>
+    <div class="noise" aria-hidden="true"></div>
 
-    <!-- Tela de Interação para Habilitar Áudio & WebGL Lazy Load -->
+    <!-- Tela inicial: o clique libera o áudio do boot -->
     <div id="init-screen">
-        <button id="init-btn">> Iniciar_Sistema</button>
+        <div class="init-box">
+            <button id="init-btn" type="button">&gt; iniciar_sistema</button>
+            <button id="skip-btn" type="button" class="skip-btn">pular intro</button>
+        </div>
     </div>
 
-    <!-- Tela de Boot -->
-    <div id="boot-screen">
+    <!-- Tela de boot -->
+    <div id="boot-screen" aria-hidden="true">
         <div id="terminal-content"></div>
-        <div class="terminal-line"><span id="typewriter"></span><span class="cursor"></span></div>
+        <div class="terminal-line is-typing"><span id="typewriter"></span><span class="cursor"></span></div>
+        <button id="boot-skip" type="button" class="skip-btn boot-skip">pular</button>
     </div>
 
-    <!-- Easter Egg Modal -->
-    <div id="easter-egg-terminal">
-        <p>> ROOT ACCESS GRANTED.</p>
-        <p>> INITIATING SECURITY AUDIT...</p>
-        <p>> VULNERABILITY FOUND IN SECTOR 7G.</p>
-        <p>> REDIRECTING TO SECRET PROTOCOL...</p>
-        <a href="https://github.com/EdineiMZ" target="_blank" style="color: #fff; background: #0f0; padding: 10px; display: inline-block; margin-top: 20px; text-decoration: none; color: #000; font-weight: bold;">[ ACESSAR GITHUB ROOT ]</a>
+    <!-- Easter egg: digite "sudo" -->
+    <div id="easter-egg-terminal" role="dialog" aria-modal="true" aria-labelledby="egg-title" hidden>
+        <p id="egg-title">&gt; ROOT ACCESS GRANTED.</p>
+        <p>&gt; INITIATING SECURITY AUDIT...</p>
+        <p>&gt; VULNERABILITY FOUND IN SECTOR 7G.</p>
+        <p>&gt; REDIRECTING TO SECRET PROTOCOL...</p>
+        <div class="egg-actions">
+            <a href="https://github.com/EdineiMZ" target="_blank" rel="noopener noreferrer" class="egg-link">[ acessar github root ]</a>
+            <button type="button" id="egg-close" class="egg-close">[ esc ] fechar</button>
+        </div>
     </div>
 
-    <!-- Canvas 3D Background -->
-    <canvas id="webgl-canvas"></canvas>
+    <!-- Fundo 3D -->
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
 
     <main id="main-content">
-        <nav class="top-nav" id="top-nav">
-            <a href="#sobre">Início</a>
+        <nav class="top-nav" id="top-nav" aria-label="Navegação principal">
+            <a href="#home">Início</a>
+            <a href="#sobre">Sobre</a>
             <a href="#skills">Stack</a>
             <a href="#projetos">Projetos</a>
-            <a href="#lab">Lab 3D</a>
+            <a href="#trajetoria">Trajetória</a>
+            <a href="#contato">Contato</a>
         </nav>
 
+        <!-- HERO -->
         <header class="hero" id="home">
-            <div class="hero-content" data-tilt data-tilt-max="5" data-tilt-speed="400">
-                <span class="hero-tag">STATUS: ONLINE</span>
+            <div class="hero-content" data-tilt data-tilt-max="4">
+                <span class="hero-tag"><span class="status-dot" aria-hidden="true"></span>status: online</span>
                 <h1>Edinei Zanol</h1>
-                <p class="hero-subtitle">Eu projeto experiências digitais com frontend moderno, backend escalável e foco real em performance, segurança e qualidade de produto.</p>
-                <div class="hero-metrics">
-                    <div><span style="color:var(--accent-color); font-size:1.5rem; font-weight:bold;">20+</span><br>PROJETOS</div>
-                    <div><span style="color:var(--accent-color); font-size:1.5rem; font-weight:bold;">6+</span><br>TECNOLOGIAS</div>
-                    <div><span style="color:var(--accent-color); font-size:1.5rem; font-weight:bold;">100%</span><br>FULL STACK</div>
+                <p class="hero-role">Desenvolvedor full stack &amp; analista de suporte técnico</p>
+                <p class="hero-subtitle">Desenvolvo aplicações do backend à interface com PostgreSQL, APIs e IA, e conheço o outro lado do balcão: PDV, impressoras, máquinas de cartão, redes e atendimento.</p>
+                <div class="hero-actions">
+                    <a href="#projetos" class="cyber-button">ver projetos</a>
+                    <a href="#contato" class="cyber-button is-ghost">falar comigo</a>
                 </div>
+                <dl class="hero-metrics">
+                    <div><dt>3º lugar</dt><dd>Hackathon Inova+Saúde 2026</dd></div>
+                    <div><dt>~2 anos</dt><dd>TI no Exército Brasileiro</dd></div>
+                    <div><dt>em produção</dt><dd>sistema rodando para cliente</dd></div>
+                </dl>
             </div>
         </header>
 
-        <section id="skills">
-            <h2 class="gsap-fade">System.getSkills()</h2>
-            <div class="grid-container">
-                <div class="glass-card gsap-card" data-tilt>
-                    <i class="fab fa-python"></i><h3>Python</h3><p>APIs, automações e backend escalável.</p>
-                </div>
-                <div class="glass-card gsap-card" data-tilt>
-                    <i class="fab fa-js"></i><h3>JavaScript</h3><p>Interfaces dinâmicas e integrações assíncronas.</p>
-                </div>
-                <div class="glass-card gsap-card" data-tilt>
-                    <i class="fab fa-react"></i><h3>React</h3><p>Arquitetura de UI componentizada.</p>
-                </div>
-                <div class="glass-card gsap-card" data-tilt>
-                    <i class="fas fa-database"></i><h3>PostgreSQL</h3><p>Modelagem e performance de dados relacionais.</p>
+        <!-- SOBRE -->
+        <section id="sobre" class="section">
+            <h2 class="section-cmd"><span class="prompt">$</span> whoami</h2>
+            <p class="section-lead">Quem está por trás do terminal.</p>
+
+            <div class="about">
+                <img src="imgs/profile.jpg" alt="Foto de Edinei Zanol" class="about-photo" width="800" height="800" loading="lazy">
+                <div class="about-text">
+                    <p>Comecei escrevendo scripts .bat no computador da escola, passei por mods e servidores de Minecraft e fui parar no desenvolvimento web. Quase tudo aprendi sozinho, movido por curiosidade de entender como as coisas funcionam por dentro.</p>
+                    <p>Hoje desenvolvo aplicações do backend à interface, com foco em PostgreSQL (Row Level Security, multitenancy, PgBouncer), APIs em NestJS e IA aplicada a problemas reais, como lançar uma despesa a partir da foto de uma nota.</p>
+                    <p>Antes do código, trabalhei com suporte: instalação de PDVs, impressoras e máquinas de cartão, emissão de NFC-e/NF-e, redes e manutenção de hardware. Isso me deixou com um olho no usuário final em tudo que construo.</p>
+                    <ul class="about-facts">
+                        <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>São Miguel do Oeste, SC</li>
+                        <li><i class="fas fa-graduation-cap" aria-hidden="true"></i>Ciência da Computação, Unoesc (pausada, retomando em breve)</li>
+                        <li><i class="fas fa-gamepad" aria-hidden="true"></i>Segurança, IA, games e anime</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Sessão de Projetos -->
+        <!-- STACK -->
+        <section id="skills" class="section">
+            <h2 class="section-cmd"><span class="prompt">$</span> ls ./stack</h2>
+            <p class="section-lead">O que eu uso no dia a dia.</p>
+
+            <div class="grid-container">
+                <article class="glass-card">
+                    <i class="fas fa-layer-group" aria-hidden="true"></i>
+                    <h3>Full stack</h3>
+                    <p>NestJS, Node.js, TypeScript e Python no backend; HTML, CSS e JavaScript na interface. APIs REST, autenticação e integrações.</p>
+                </article>
+                <article class="glass-card">
+                    <i class="fas fa-database" aria-hidden="true"></i>
+                    <h3>PostgreSQL</h3>
+                    <p>Modelagem, Row Level Security, sistemas multiempresa (multitenancy) e pool de conexões com PgBouncer.</p>
+                </article>
+                <article class="glass-card">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    <h3>IA aplicada</h3>
+                    <p>Extração de dados de notas, PDFs e fotos, LLMs rodando localmente e agentes que fazem a triagem de chamados de suporte.</p>
+                </article>
+                <article class="glass-card">
+                    <i class="fas fa-user-shield" aria-hidden="true"></i>
+                    <h3>Segurança</h3>
+                    <p>Pentest e revisão de segurança das minhas próprias aplicações. Kali Linux, HackTheBox e TryHackMe.</p>
+                </article>
+                <article class="glass-card">
+                    <i class="fas fa-server" aria-hidden="true"></i>
+                    <h3>Infraestrutura</h3>
+                    <p>Servidores Linux e VPS, deploy com PM2, configuração de redes, câmeras IP e monitoramento de servidores.</p>
+                </article>
+                <article class="glass-card">
+                    <i class="fas fa-cash-register" aria-hidden="true"></i>
+                    <h3>Suporte técnico</h3>
+                    <p>PDV, impressoras e máquinas de cartão, NFC-e/NF-e, montagem e manutenção de computadores e atendimento ao cliente.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- PROJETOS -->
         <section id="projetos" class="projects-wrapper">
-            <h2 class="project-title" style="text-align: left; padding-left: 5%; color: #fff; -webkit-text-stroke: 0px;">Work_History</h2>
+            <div class="projects-head">
+                <h2 class="section-cmd"><span class="prompt">$</span> ls ./projetos</h2>
+                <p class="section-lead">Sistemas que construí ou estou construindo.</p>
+            </div>
             <div class="projects-container">
-                <div class="project-card" data-tilt>
-                    <img src="imgs/nssbs.jpg" alt="Naruto Sushi SBS" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop'">
+                <article class="project-card has-pattern" data-tilt>
+                    <div class="project-info">
+                        <span class="status-chip is-dev">em testes com produtores</span>
+                        <span class="tech-badge">SaaS • PostgreSQL • IA</span>
+                        <h3>AGRIVOR</h3>
+                        <p>Gestão rural com IA: lança despesas a partir da foto de uma nota ou de uma anotação de caderno, sempre com conferência humana antes de salvar. Multiempresa, rebanho, lavouras, leite e CRM rural.</p>
+                    </div>
+                </article>
+                <article class="project-card" data-tilt>
+                    <img src="imgs/hackaton.jpg" alt="" loading="lazy">
+                    <div class="project-info">
+                        <span class="status-chip is-win">3º lugar, Hackathon Inova+Saúde 2026</span>
+                        <span class="tech-badge">Saúde digital • RNDS • MVP</span>
+                        <h3>BUS: Base Única de Saúde</h3>
+                        <p>Alerta que avisa o profissional, na hora do pedido, que o exame do paciente já existe. Ideia, pesquisa com 48 pessoas, MVP e pitch feitos em 3 dias.</p>
+                    </div>
+                </article>
+                <article class="project-card has-pattern is-alt" data-tilt>
+                    <div class="project-info">
+                        <span class="status-chip is-live">em produção</span>
+                        <span class="tech-badge">Node.js • PostgreSQL • VPS</span>
+                        <h3>RuralPro</h3>
+                        <p>Sistema de gestão rural entregue a um cliente: rebanho, lavoura e leitura de documentos com IA. Eu mantenho a API, o front e o servidor.</p>
+                    </div>
+                </article>
+                <article class="project-card has-pattern is-grid" data-tilt>
+                    <div class="project-info">
+                        <span class="status-chip">uso interno</span>
+                        <span class="tech-badge">PostgreSQL • JWT • self-hosted</span>
+                        <h3>Helpdesk de TI</h3>
+                        <p>Central de chamados para uma instituição: protocolo próprio, inventário de rede com tipos INET/MACADDR do PostgreSQL e zero dependência de serviços externos.</p>
+                    </div>
+                </article>
+                <article class="project-card" data-tilt>
+                    <img src="imgs/nssbs.jpg" alt="" loading="lazy">
                     <div class="project-info">
                         <span class="tech-badge">Python • Django • Bootstrap</span>
-                        <h3 style="font-size:2.5rem; margin-bottom:10px;">Naruto Sushi SBS</h3>
-                        <p style="color:#ddd; font-size:1.1rem;">Site institucional otimizado para captação local e navegação mobile-first.</p>
+                        <h3>Naruto Sushi SBS</h3>
+                        <p>Site institucional pensado para o celular, para o cliente encontrar o restaurante e fazer o pedido rápido.</p>
                     </div>
-                </div>
-                <div class="project-card" data-tilt>
-                    <img src="imgs/projetogestao.jpg" alt="Sistema de Gestão" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop'">
+                </article>
+                <article class="project-card" data-tilt>
+                    <img src="imgs/projetogestao.jpg" alt="" loading="lazy">
                     <div class="project-info">
                         <span class="tech-badge">Node.js • PostgreSQL • APIs</span>
-                        <h3 style="font-size:2.5rem; margin-bottom:10px;">Gestão de Clientes</h3>
-                        <p style="color:#ddd; font-size:1.1rem;">Plataforma com regras de negócio complexas e integrações de validação.</p>
+                        <h3>Gestão de Clientes</h3>
+                        <p>Plataforma com regras de negócio complexas e integrações de validação de dados.</p>
                     </div>
-                </div>
-                <div class="project-card" data-tilt>
-                    <img src="imgs/projetomabfy.jpg" alt="Mabfy" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000&auto=format&fit=crop'">
+                </article>
+                <article class="project-card" data-tilt>
+                    <img src="imgs/projetomabfy.jpg" alt="" loading="lazy">
                     <div class="project-info">
-                        <span class="tech-badge">Full Stack • Produto</span>
-                        <h3 style="font-size:2.5rem; margin-bottom:10px;">Desenvolvimento Mabfy</h3>
-                        <p style="color:#ddd; font-size:1.1rem;">Evolução de módulos full stack com foco extremo em UX e manutenção.</p>
+                        <span class="tech-badge">Full stack • Produto</span>
+                        <h3>Mabfy</h3>
+                        <p>Evolução de módulos full stack com foco em experiência do usuário e manutenção do código.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Final: Laboratório 3D -->
-        <section id="lab" style="min-height: auto; padding-bottom: 100px;">
-            <h2 class="gsap-fade">Laboratório Criativo</h2>
-            
-            <div class="grid-container" style="margin-bottom: 40px;">
-                <div class="glass-card gsap-card">
-                    <i class="fas fa-cube"></i>
-                    <h3>Animação & Modelagem</h3>
-                    <p>Produção de comerciais animados em 3D de alta qualidade, explorando texturas, iluminação e design voltados para marcas de moda e streetwear.</p>
-                    
-                    <!-- Container do Objeto 3D Interativo -->
-                    <div class="lab-3d-wrapper">
-                        <div id="lab-canvas-container"></div>
-                    </div>
-                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--accent-color);">Arraste para interagir</p>
-                </div>
-
-                <div class="glass-card gsap-card" data-tilt style="display: flex; flex-direction: column; justify-content: center;">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Sincronia Audiovisual</h3>
-                    <p>Edição agressiva de projetos em vídeo, mapeando reações intensas e integrando cortes precisos sincronizados com trilhas sonoras fortes.</p>
-                </div>
-            </div>
-
-            <div class="contact-terminal gsap-card" style="text-align: center; max-width: 600px; margin: 0 auto;">
-                <p style="font-family: 'Fira Code', monospace; color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">
-                    > Conexão principal estabelecida.<br>
-                    > Módulos de interface carregados.<br>
-                    > <span style="color: var(--accent-color);">Pronto para alocar novos desafios.</span>
-                </p>
-                <a href="https://wa.me/5549991943662" target="_blank" class="cyber-button">
-                    [INICIAR_CONTATO]
+                </article>
+                <a class="project-card project-more" href="https://github.com/EdineiMZ" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                    <span>Ver mais no GitHub</span>
                 </a>
             </div>
         </section>
 
+        <!-- TRAJETÓRIA -->
+        <section id="trajetoria" class="section">
+            <h2 class="section-cmd"><span class="prompt">$</span> cat trajetoria.log</h2>
+            <p class="section-lead">Do suporte técnico ao desenvolvimento.</p>
+
+            <ol class="timeline">
+                <li class="timeline-item">
+                    <span class="timeline-when">hoje</span>
+                    <h3>Produtos próprios</h3>
+                    <p>Desenvolvo sistemas SaaS para o agro e o varejo, com PostgreSQL multiempresa e IA aplicada à rotina de quem usa.</p>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-when">2024 a 2026</span>
+                    <h3>TI no Exército Brasileiro</h3>
+                    <p>Redes e servidores Linux, câmeras IP, montagem e manutenção de computadores e impressoras, e desenvolvimento de sistemas internos.</p>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-when">antes</span>
+                    <h3>Analista de suporte técnico</h3>
+                    <p>Suporte a sistemas de PDV para supermercados: instalação de caixas, impressoras e máquinas de cartão, correção e emissão de NFC-e/NF-e e atendimento.</p>
+                </li>
+                <li class="timeline-item">
+                    <span class="timeline-when">o começo</span>
+                    <h3>Autodidata</h3>
+                    <p>Scripts .bat, mods e servidores de Minecraft, depois sites e segurança. A curiosidade virou profissão.</p>
+                </li>
+            </ol>
+
+            <h3 class="events-title">Eventos</h3>
+            <div class="events">
+                <figure class="event-card">
+                    <img src="imgs/hackaton.jpg" alt="" loading="lazy">
+                    <figcaption><strong>Hackathon Inova+Saúde 2026</strong><span>3º lugar com o projeto BUS</span></figcaption>
+                </figure>
+                <figure class="event-card">
+                    <img src="imgs/startupweekend.jpg" alt="" loading="lazy">
+                    <figcaption><strong>Startup Weekend SMO 2024</strong><span>São Miguel do Oeste</span></figcaption>
+                </figure>
+                <figure class="event-card">
+                    <img src="imgs/latinoware2.jpg" alt="" loading="lazy">
+                    <figcaption><strong>Latinoware 2022</strong><span>Congresso de software livre</span></figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- LAB -->
+        <section id="lab" class="section">
+            <h2 class="section-cmd"><span class="prompt">$</span> ./lab --criativo</h2>
+            <p class="section-lead">O que eu faço quando não estou no backend.</p>
+
+            <div class="lab-grid">
+                <article class="glass-card">
+                    <i class="fas fa-cube" aria-hidden="true"></i>
+                    <h3>3D no navegador</h3>
+                    <p>Modelos 3D rodando direto na página com Three.js e WebGL, como o fundo deste site.</p>
+                    <div class="lab-3d-wrapper">
+                        <div id="lab-canvas-container"></div>
+                        <p class="lab-status" id="lab-status">o modelo carrega quando você chegar aqui</p>
+                    </div>
+                    <p class="lab-hint">arraste para girar</p>
+                </article>
+                <article class="glass-card editor-card">
+                    <i class="fas fa-film" aria-hidden="true"></i>
+                    <h3>Vídeo e design</h3>
+                    <p>Edito vídeo cortando no ritmo da trilha e monto as peças gráficas que vão junto.</p>
+
+                    <!-- Mini editor: a timeline toca sozinha; clique nela para pular -->
+                    <div class="editor" id="editor">
+                        <div class="editor-monitor" id="editor-monitor">
+                            <div class="monitor-scene" id="monitor-scene"></div>
+                            <p class="monitor-title" id="monitor-title"></p>
+                            <span class="monitor-tc" id="monitor-tc">00:00:00:00</span>
+                            <span class="monitor-rec" aria-hidden="true">● rec</span>
+                        </div>
+
+                        <div class="editor-controls">
+                            <button type="button" class="editor-play" id="editor-play" aria-label="Pausar">
+                                <i class="fas fa-pause" aria-hidden="true"></i>
+                            </button>
+                            <span class="editor-clip-name" id="editor-clip-name">abertura</span>
+                        </div>
+
+                        <div class="editor-timeline" id="editor-timeline" role="slider" tabindex="0"
+                             aria-label="Linha do tempo do vídeo" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0">
+                            <div class="track" data-track="v2"><span class="track-label">V2</span><div class="track-lane"></div></div>
+                            <div class="track" data-track="v1"><span class="track-label">V1</span><div class="track-lane"></div></div>
+                            <div class="track" data-track="a1"><span class="track-label">A1</span><div class="track-lane wave" id="editor-wave"></div></div>
+                            <div class="playhead" id="editor-playhead" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <ul class="tool-list" aria-label="Ferramentas">
+                        <li>Premiere Pro</li>
+                        <li>Audition</li>
+                        <li>Photoshop</li>
+                        <li>Illustrator</li>
+                        <li>InDesign</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- CONTATO -->
+        <section id="contato" class="section">
+            <h2 class="section-cmd"><span class="prompt">$</span> ./contato.sh</h2>
+            <div class="contact-terminal">
+                <p class="contact-log">
+                    &gt; conexão estabelecida.<br>
+                    &gt; <span class="accent">pronto para novos desafios.</span>
+                </p>
+                <div class="contact-links">
+                    <a href="https://wa.me/5549991943662" target="_blank" rel="noopener noreferrer" class="cyber-button"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+                    <a href="https://www.linkedin.com/in/edinei-miguel-zanol-0718b3266" target="_blank" rel="noopener noreferrer" class="cyber-button is-ghost"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
+                    <a href="https://github.com/EdineiMZ" target="_blank" rel="noopener noreferrer" class="cyber-button is-ghost"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
+                    <a href="mailto:edinei.zanol@gmail.com" class="cyber-button is-ghost"><i class="fas fa-envelope" aria-hidden="true"></i> E-mail</a>
+                </div>
+            </div>
+        </section>
+
         <footer>
-            <p>> EDINEI_MIGUEL_ZANOL.exe executado com sucesso. © 2026</p>
+            <p>&gt; edinei_miguel_zanol.exe executado com sucesso. © <span id="year">2026</span></p>
+            <p class="footer-hint">dica: tente digitar <button type="button" id="egg-hint" class="egg-hint" aria-label="Abrir o easter egg">sudo</button></p>
         </footer>
     </main>
 
-    <!-- Bibliotecas Externas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    <!-- Rede de segurança: se o js/main.js não carregar, mostra o conteúdo mesmo assim -->
     <script>
-        /* =========================================
-           EASTER EGG (Security Audit)
-           ========================================= */
-        let keySequence = '';
-        const secretCode = 'sudo';
-        
-        document.addEventListener('keydown', (e) => {
-            keySequence += e.key.toLowerCase();
-            if (keySequence.length > secretCode.length) {
-                keySequence = keySequence.substring(1);
+        setTimeout(function () {
+            if (window.__portfolioReady) return;
+            ['init-screen', 'boot-screen'].forEach(function (id) { document.getElementById(id).style.display = 'none'; });
+            document.body.classList.remove('is-locked');
+            var m = document.getElementById('main-content');
+            m.style.visibility = 'visible'; m.style.opacity = '1';
+        }, 8000);
+    </script>
+
+    <!-- Three.js como módulo, carregado só quando o 3D é usado (versão fixa) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
             }
-            if (keySequence === secretCode) {
-                document.body.classList.add('glitch-active');
-                document.getElementById('easter-egg-terminal').style.display = 'block';
-                // Áudio agressivo
-                if (audioCtx) {
-                    const osc = audioCtx.createOscillator();
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(100, audioCtx.currentTime);
-                    osc.connect(audioCtx.destination);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-            }
-        });
-
-        /* =========================================
-           SÍNTESE DE ÁUDIO & VARIÁVEL DE SINCRONIA
-           ========================================= */
-        let audioCtx;
-        let globalAudioPulse = 0; // Usado para sincronizar o WebGL
-
-        function initAudio() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
-
-        function playTypingSound() {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(800 + Math.random() * 200, audioCtx.currentTime);
-            
-            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-            
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-
-            globalAudioPulse = 0.5; // Faz o 3D pulsar a cada tecla
-        }
-
-        function playSuccessSound() {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
-            
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-            
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.5);
-
-            globalAudioPulse = 2.0; // Pulso forte no sucesso
-        }
-
-        /* =========================================
-           TERMINAL BOOT SEQUENCE
-           ========================================= */
-        const bootLines = [
-            "> Inicializando kernel de visualização...",
-            "> Carregando módulos Otimizados (FPS Monitor)... OK",
-            "> Estabelecendo ponte Web Audio API...",
-            "> Acesso Root Autorizado."
-        ];
-        
-        let lineIndex = 0; let charIndex = 0;
-        const typewriterElement = document.getElementById('typewriter');
-        const terminalContent = document.getElementById('terminal-content');
-        const bootScreen = document.getElementById('boot-screen');
-        const initScreen = document.getElementById('init-screen');
-
-        document.getElementById('init-btn').addEventListener('click', () => {
-            initAudio(); 
-            initGlobalWebGL(); // Lazy Load do 3D principal
-            initLabWebGL();    // Inicia a peça de Streetwear do Lab
-            initScreen.style.display = 'none';
-            bootScreen.style.display = 'flex';
-            typeLine(); 
-        });
-
-        function typeLine() {
-            if (lineIndex < bootLines.length) {
-                if (charIndex < bootLines[lineIndex].length) {
-                    typewriterElement.textContent += bootLines[lineIndex].charAt(charIndex);
-                    if (charIndex % 2 === 0) playTypingSound();
-                    charIndex++;
-                    setTimeout(typeLine, Math.random() * 20 + 10);
-                } else {
-                    const div = document.createElement('div');
-                    div.className = 'terminal-line';
-                    div.style.opacity = 1;
-                    div.textContent = bootLines[lineIndex];
-                    terminalContent.appendChild(div);
-                    typewriterElement.textContent = '';
-                    charIndex = 0; lineIndex++;
-                    
-                    if (lineIndex === bootLines.length) playSuccessSound();
-                    setTimeout(typeLine, 200);
-                }
-            } else {
-                setTimeout(() => {
-                    gsap.to(bootScreen, { opacity: 0, duration: 0.8, onComplete: () => {
-                        bootScreen.style.display = 'none';
-                        document.body.style.overflowY = 'auto';
-                        document.getElementById('main-content').style.visibility = 'visible';
-                        gsap.to('#main-content', { opacity: 1, duration: 1 });
-                        initSiteAnimations();
-                    }});
-                }, 600);
-            }
-        }
-
-        /* =========================================
-           AMBIENTE 3D GLOBAL (Fundo) + EXTREME OPTIMIZATION
-           ========================================= */
-        let globalScene, globalCamera, globalRenderer, torusKnot;
-        let webGLActive = true; 
-
-        function initGlobalWebGL() {
-            const canvas = document.getElementById('webgl-canvas');
-            globalScene = new THREE.Scene();
-            globalCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            globalCamera.position.z = 30;
-
-            globalRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
-            globalRenderer.setSize(window.innerWidth, window.innerHeight);
-            globalRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-
-            const geometry = new THREE.TorusKnotGeometry(10, 3, 70, 12);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x00ffcc, wireframe: true, transparent: true, opacity: 0.12
-            });
-            torusKnot = new THREE.Mesh(geometry, material);
-            globalScene.add(torusKnot);
-
-            let mouseX = 0; let mouseY = 0;
-            document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-                mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
-            });
-
-            // FPS Monitor Logic
-            const clock = new THREE.Clock();
-            let frames = 0; let lastTime = performance.now();
-            let lowFpsCount = 0;
-
-            function animateGlobal3D() {
-                if (!webGLActive) return; // Fallback cancela o loop
-                requestAnimationFrame(animateGlobal3D);
-                
-                // Monitoramento de Performance (FPS)
-                frames++;
-                const now = performance.now();
-                if (now - lastTime >= 1000) {
-                    if (frames < 20) lowFpsCount++;
-                    else lowFpsCount = 0;
-                    
-                    if (lowFpsCount > 3) {
-                        console.warn("> FPS Drop detectado. Desativando WebGL para garantir performance.");
-                        canvas.style.opacity = '0';
-                        setTimeout(() => { webGLActive = false; }, 1000);
-                    }
-                    frames = 0; lastTime = now;
-                }
-
-                const elapsedTime = clock.getElapsedTime();
-                torusKnot.rotation.y = elapsedTime * 0.15;
-                torusKnot.rotation.x = elapsedTime * 0.1;
-
-                torusKnot.rotation.y += 0.05 * (mouseX - torusKnot.rotation.y);
-                torusKnot.rotation.x += 0.05 * (mouseY - torusKnot.rotation.x);
-
-                // AUDIO VISUALIZER: Aplica a pulsação do áudio no tamanho do nó 3D
-                const scale = 1 + globalAudioPulse;
-                torusKnot.scale.set(scale, scale, scale);
-                globalAudioPulse *= 0.9; // Decaimento suave
-
-                globalRenderer.render(globalScene, globalCamera);
-            }
-            animateGlobal3D();
-
-            window.addEventListener('resize', () => {
-                globalCamera.aspect = window.innerWidth / window.innerHeight;
-                globalCamera.updateProjectionMatrix();
-                globalRenderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        }
-
-        /* =========================================
-           LAB 3D: RENDERIZADOR ESPECÍFICO (Streetwear)
-           ========================================= */
-        function initLabWebGL() {
-            const container = document.getElementById('lab-canvas-container');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-            camera.position.z = 5;
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.enableZoom = false;
-
-            // Iluminação para modelos 3D
-            const light = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(light);
-            const directionalLight = new THREE.DirectionalLight(0x00ffcc, 1);
-            directionalLight.position.set(2, 2, 5);
-            scene.add(directionalLight);
-
-            // MODELO DE FALLBACK (Holo-Cubo). 
-            // SUBSTITUA ISSO pelo seu modelo GLTF descomentando o código abaixo.
-            const geometry = new THREE.IcosahedronGeometry(1.5, 0);
-            const material = new THREE.MeshStandardMaterial({ 
-                color: 0x00ffcc, wireframe: true, emissive: 0x004422 
-            });
-            let object3D = new THREE.Mesh(geometry, material);
-            scene.add(object3D);
-
-            //===== CÓDIGO PARA CARREGAR SEU TÊNIS/ROUPA 3D REAL ===== 
-            const loader = new THREE.GLTFLoader();
-            loader.load('casa.glb', function (gltf) {
-                scene.remove(object3D); // Remove o cubo
-                object3D = gltf.scene;
-                
-                // Ajusta o tamanho se vier muito grande/pequeno
-                object3D.scale.set(0.5, 0.5, 0.5); 
-                
-                // Centraliza
-                const box = new THREE.Box3().setFromObject(object3D);
-                const center = box.getCenter(new THREE.Vector3());
-                object3D.position.sub(center);
-                
-                scene.add(object3D);
-            });
-          //  ======================================================= */
-
-            function animateLab() {
-                requestAnimationFrame(animateLab);
-                if (object3D) object3D.rotation.y += 0.005;
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animateLab();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-        }
-
-        /* =========================================
-           ANIMAÇÕES GSAP
-           ========================================= */
-        gsap.registerPlugin(ScrollTrigger);
-
-        function initSiteAnimations() {
-            gsap.from(".hero-content", { duration: 1.5, scale: 0.9, y: 50, opacity: 0, ease: "power4.out" });
-
-            gsap.utils.toArray('.gsap-card').forEach((card, i) => {
-                gsap.from(card, {
-                    scrollTrigger: { trigger: card, start: "top 85%" },
-                    y: 50, opacity: 0, duration: 0.8, ease: "power3.out", delay: i * 0.1
-                });
-            });
-
-            let mm = gsap.matchMedia();
-
-            mm.add("(min-width: 769px)", () => {
-                const projectsContainer = document.querySelector('.projects-container');
-                gsap.to(projectsContainer, {
-                    x: () => -(projectsContainer.scrollWidth - window.innerWidth + 100) + "px",
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".projects-wrapper", start: "top top",
-                        end: () => "+=" + projectsContainer.scrollWidth,
-                        pin: true, scrub: 1, invalidateOnRefresh: true
-                    }
-                });
-                VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 8, speed: 400, glare: true, "max-glare": 0.1 });
-            });
-
-            mm.add("(max-width: 768px)", () => {
-                gsap.utils.toArray('.project-card').forEach((card) => {
-                    gsap.from(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 30, opacity: 0, duration: 0.8, ease: "power3.out" });
-                });
-                document.querySelectorAll("[data-tilt]").forEach(el => { if(el.vanillaTilt) el.vanillaTilt.destroy(); });
-            });
         }
     </script>
+
+    <!-- Bibliotecas de animação (versões fixas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <!-- Script clássico (não "module"): assim funciona até abrindo o index.html direto do computador -->
+    <script src="js/main.js" defer></script>
 </body>
 </html>
